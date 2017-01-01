@@ -14,10 +14,15 @@ def img_show(img):
     pil_img = Image.fromarray(np.uint8(img))
     pil_img.show()
 
-def get_data():
+def get_test_data():
     (x_train, t_train), (x_test, t_test) = \
         load_mnist(flatten=True, normalize=False)
     return x_test, t_test
+
+def get_train_data():
+    (x_train, t_train), (x_test, t_test) = \
+        load_mnist(normalize=False, one_hot_label=True)
+    return x_train, t_train
 
 def init_network():
     with open(oreilly_dataset_path + "/ch03/sample_weight.pkl", 'rb') as f:
@@ -39,7 +44,7 @@ def predict(network, x):
     return y
 
 def main():
-    x, t = get_data()
+    x, t = get_test_data()
     network = init_network()
     
     batch_size = 100
